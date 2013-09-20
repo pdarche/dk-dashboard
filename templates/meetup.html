@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+	<header>
+		<h1>Meetup</h1>
+	</header>
+	{% for event in events %}
+		<div class="meetup"> 
+			<h2><a href="{{ event['event_url']}}"> {{ event['name'] }}</a></h2>
+			<div>
+				RSVPs: {{ event['yes_rsvp_count'] }}
+			</div>
+			<div>
+				rating: {{ event['rating']['average'] }}
+			</div>
+		</div>
+	{% end %}
+{% end %}

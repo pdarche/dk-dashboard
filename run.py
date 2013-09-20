@@ -18,6 +18,9 @@ import tornado.web
 from settings import settings
 from urls import url_patterns
 
+from pymongo import MongoClient
+client = MongoClient('localhost', 27017)
+
 
 class TornadoApplication(tornado.web.Application):
     def __init__(self):
