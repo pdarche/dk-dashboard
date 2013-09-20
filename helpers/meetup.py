@@ -2,13 +2,13 @@ def average(list):
 	return sum(list) / float(len(list))
 
 def pluck(list,attr):
-	return map(lambda x: event['yes_rsvp_count'], events)
+	return map(lambda x: x[attr], list)
 
 def descriptive_stats(events):
-	yes_rsvps = map(lambda x: x['yes_rsvp_count'], events)
-	maybe_rsvps = map(lambda x: x['maybe_rsvp_count'], events)
-	waitlist = map(lambda x: x['waitlist_count'], events)
-	headcount = map(lambda x: x['headcount'], events)
+	yes_rsvps = pluck(events, 'yes_rsvp_count') #map(lambda x: x['yes_rsvp_count'], events)
+	maybe_rsvps = pluck(events, 'maybe_rsvp_count') #map(lambda x: x['maybe_rsvp_count'], events)
+	waitlist = pluck(events, 'waitlist_count') #map(lambda x: x['waitlist_count'], events)
+	headcount = pluck(events, 'headcount') #map(lambda x: x['headcount'], events)
 	avg_rating = map(lambda x: x['rating']['average'], events)
 	rating_count = map(lambda x: x['rating']['count'], events)
 
