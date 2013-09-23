@@ -1,17 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
-	<header>
-		<h1>Meetup</h1>
-	</header>
-	{% for event in events %}
-		<div class="meetup"> 
-			<h2><a href="{{ event['event_url']}}"> {{ event['name'] }}</a></h2>
-			<div>
-				RSVPs: {{ event['yes_rsvp_count'] }}
-			</div>
-			<div>
-				rating: {{ event['rating']['average'] }}
-			</div>
+	<div id="content">
+		<header>
+			<h1>Meetup</h1>
+		</header>
+		<div id="timeseries">
+			<ul id="timeries_nav">
+				<li id="yes_rsvps">Yes RSVPs</li>
+				<li id="maybe_rsvps">Maybe RSVPs</li>
+				<li id="waitlists">Waitlist</li>
+				<li id="headcounts">Headcount</li>
+				<li id="avg_ratings">Meetup Rating</li>
+				<li id="ratings_count">Number of Ratings</li>
+				<li>Cost</li>
+			<ul>
+			<div id="timeseries_vis"> </div>
 		</div>
-	{% end %}
+	
+		{% for event in events %}
+			<div class="meetup"> 
+				<h2><a href="{{ event['event_url']}}"> {{ event['name'] }}</a></h2>
+				<div>
+					RSVPs: {{ event['yes_rsvp_count'] }}
+				</div>
+				<div>
+					rating: {{ event['rating']['average'] }}
+				</div>
+			</div>
+		{% end %}
+	</div>
+	<script type="text/javascript" src="{{ static_url("js/meetup-program.js") }}"></script>
 {% end %}

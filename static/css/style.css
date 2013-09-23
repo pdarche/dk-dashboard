@@ -1,0 +1,26 @@
+body {
+	background-image: url('../img/bg-texture.png')
+}
+
+#content {
+	display: block;
+	width: 1210px;
+	margin:0px auto;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+ /* display: none;*/
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}

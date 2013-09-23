@@ -4,6 +4,7 @@ from handlers import base
 
 url_patterns = [
     (r"/", base.MainHandler),
-    (r"/meetups", base.MeetupHandler),
+    (r"/meetups/program", base.MeetupProgramHandler),
+    (r"/api/meetups/program", base.MeetupProgramAPIHandler),
     (r"/update-meetup", base.UpdateMeetup)
 ]
