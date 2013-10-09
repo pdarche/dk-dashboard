@@ -3,7 +3,6 @@
 settings.py
 notebooks
 notebooks/*
-.bash_profile
 
 # C extensions
 *.so

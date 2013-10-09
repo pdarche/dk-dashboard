@@ -8,6 +8,36 @@ body {
 	margin:0px auto;
 }
 
+#meetup_project_content {
+  font-family: 'HelveticaNeueW01-67MdCn 692710', "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+#meetup_project_content h1 {
+  color: orange;
+  margin: 5px 0px 5px 0px;
+  font-size: 48px;
+}
+
+#meetup_project_content h5 {
+  margin: 2px;
+  color: #ddd;
+}
+
+#meetup_project_content #subheading{
+  display: inline-block;
+}
+
+#meetup_project_content #subheading p{
+  float: left;
+  margin: 2px 14px 2px 0px;
+}
+
+#meetup_project_content #meetup_description {
+  border: 1px solid #ddd;
+  padding: 20px;
+}
+
+
 .axis path,
 .axis line {
   fill: none;
