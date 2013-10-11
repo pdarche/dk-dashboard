@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+	<div id="content">
+		<div id="meetup_checkin_content">
+			<header>
+				<h1 class="orange center-text fs-48">Meetup Checkin</h1>
+			</header>
+			<form>
+			{% for rsvp in rsvps['results'] %}
+				{% if rsvp['response'] == 'yes' %} 
+					<div class="yes-rsvp {{ rsvp['member']['member_id'] }}"> 									
+						<div class="member-checkbox"> 				
+							<button class="submit here" type="submit" name="here">Here</button>
+							<button class="submit noshow" type="submit" name="noshow">No Show</button>
+						</div>
+						<div class="member-photo">
+							{% if 'member_photo' in rsvp.keys() %} 
+								<img src="{{ rsvp['member_photo']['thumb_link'] }}"/>
+							{% else %} 
+								<div>No Photo</div>
+							{% end %}
+						</div>
+						<div class="member-name">
+							<p>{{ rsvp['member']['name'] }}</p>
+						</div>			
+					</div>
+				{% end %}
+			{% end %}
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript" src="{{ static_url("js/meetup-checkin.js") }}"></script>
+{% end %}

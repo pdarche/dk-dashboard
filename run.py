@@ -21,7 +21,6 @@ from urls import url_patterns
 from pymongo import MongoClient
 client = MongoClient('localhost', 27017)
 
-
 class TornadoApplication(tornado.web.Application):
     def __init__(self):
         tornado.web.Application.__init__(self, url_patterns, **settings)

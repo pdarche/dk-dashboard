@@ -10,10 +10,23 @@
 					<p>{{ event['venue']['name'] }}</p>
 				</span>
 			</header>
-			<div id="meetup_description">
+			<div id="meetup_nav">
+				<ul>
+					<li id="description" class="active">Description</li>
+					<li id="speakers">Speakers</li>
+					<li id="sponsors">Sponsors</li>
+					<li id="venues">Venue</li>
+					<li id="photos">Photos</li>
+					<li id="comments">Comments</li>
+					<li id="ratings">Ratings</li>
+					<li id="attendance">Attendees</li>
+					<li id="rsvps">RSVPs</li>
+				</ul>
+			</div>
+			<div id="meetup_data">				
 				{% raw event['description'] %}
 			</div>
 		</div>
 	</div>
-	<!--<script type="text/javascript" src="{{ static_url("js/meetup-project.js") }}"></script>-->
+	<script type="text/javascript" src="{{ static_url("js/meetup-project.js") }}"></script>
 {% end %}

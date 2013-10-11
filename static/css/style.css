@@ -4,11 +4,11 @@ body {
 
 #content {
 	display: block;
-	width: 1210px;
+	width: 75%;
 	margin:0px auto;
 }
 
-#meetup_project_content {
+#meetup_project_content, #meetup_checkin_content {
   font-family: 'HelveticaNeueW01-67MdCn 692710', "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
@@ -32,9 +32,55 @@ body {
   margin: 2px 14px 2px 0px;
 }
 
-#meetup_project_content #meetup_description {
+#meetup_project_content #meetup_data {
   border: 1px solid #ddd;
   padding: 20px;
+}
+
+#meetup_project_content #meetup_nav ul {
+  list-style-type: none;
+  display: inline-block;
+  padding: 0px;
+  margin: 0px;
+}
+
+#meetup_project_content #meetup_nav li {
+  display: inline-block;
+  padding: 10px;
+}
+
+#meetup_project_content .active {
+  font-weight: bold;
+}
+
+#meetup_checkin_content {
+  width: 620px;
+  margin: 0px auto;
+}
+
+#meetup_checkin_content .yes-rsvp {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  height: 100px;
+  width: 100%
+}
+
+.member-checkbox,  .member-photo, .member-name {
+  float: left;
+  padding: 10px
+}
+
+.member-checkbox {
+  margin-top: 35px;
+}
+
+.member-photo {
+  width:80px;
+}
+
+.member-name p {
+  font-size: 28px;
 }
 
 
@@ -53,4 +99,16 @@ body {
   fill: none;
   stroke: steelblue;
   stroke-width: 1.5px;
+}
+
+.orange {
+  color: orange;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.fs-48 {
+  font-size: 48px;
 }
