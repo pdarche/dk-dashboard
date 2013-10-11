@@ -17,8 +17,6 @@ $(document).ready(function(){
 			data = {'user_id' : meetupUserId, 'event_id': meetupId, 'status': 'noshow'}	
 		}
 		
-
-		console.log(el.hasClass('here'))
 		$.ajax({
 			type: 'POST',
 			url: url,

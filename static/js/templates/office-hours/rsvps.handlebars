@@ -1,0 +1,40 @@
+<script type="x-handlebars-template">
+	<div id="left_pane">
+		<ul>
+			<li>
+				<p class="label total">Total</p>
+				<p class="value">{{ rsvps.total }}</p>
+			</li>
+			<li>
+				<p class="label yes">Yes</p>
+				<p class="value">{{ rsvps.tallies.yes }}</p>
+			</li>			
+			<li>
+				<p class="label no">No</p>
+				<p class="value">{{ rsvps.tallies.no }}</p>
+			</li>			
+			<li>
+				<p class="label maybe">Maybe</p>
+				<p class="value">{{ rsvps.tallies.maybe }}</p>
+			</li>
+			<li>
+				<p class="label waitlist">Waitlist</p>
+				<p class="value">{{ rsvps.tallies.waitlist }}</p>
+			</li>
+			<li>
+				<p class="label waitlist">New</p>
+			</li>
+			<li>
+				<p class="label waitlist">Returning</p>				
+			</li>							
+		</ul>
+	</div>
+	<div id="right_pane">
+		{{#each rsvps.results}}
+			<div class="rsvper {{this.response}}">
+				<img  class="rsvper-img" src="{{this.member_photo.thumb_link}}"/>
+				<h2 class="rsvper-name"> {{this.member.name}}</h2>
+			</div>
+		{{/each}}
+	</div>
+</script>

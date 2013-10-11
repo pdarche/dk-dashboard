@@ -6,6 +6,7 @@ import json
 from helpers import meetup
 from settings import settings
 from pymongo import MongoClient
+import time
 
 client = MongoClient('localhost', 27017)
 
@@ -139,16 +140,90 @@ class MeetupCheckinHandler(tornado.web.RequestHandler):
 		db.rsvpd.insert(attendee_dict)
 		self.write('success')
 
-		# dkid = '4300032'
-		# base_url = 'https://api.meetup.com'
-		# dcr_params = {
-		#     'key': settings['meetup_api_key'],
-		#     'signed':'true', 
-		#     'status':'past',
-		# }
-		# e_res = requests.get(base_url + '/2/event/' + meetup_id, params=dcr_params)
-		# dcr_data = e_res.json()
-		# self.write(json.dumps(dcr_data))
+
+class OfficeHourProjectHandler(tornado.web.RequestHandler):
+	# note this should be done synchronously with torndado.gen.task 
+	# and  
+	def get(self, meetup_id):
+		dkid = '4300032'
+		base_url = 'https://api.meetup.com'
+		dcr_params = {
+		    'key': settings['meetup_api_key'],
+		    'signed':'true', 
+		    'status':'past',
+		}
+		e_res = requests.get(base_url + '/2/event/' + meetup_id, params=dcr_params)
+		dcr_data = e_res.json()
+		self.render('office_hour_project.html', event=dcr_data)
 
 
+class OfficeHourProjectAPIHandler(tornado.web.RequestHandler):
+	def get(self, meetup_id):		
+		params = {
+			'group_id': '4300032', 
+			'key': settings['meetup_api_key'], 
+	    	'signed':'true',
+	    	'status': 'past',
+	    	'event_id': meetup_id,
+
+	    }
+		meetup_attr = self.get_argument('attr')		
+		url = self.build_path(meetup_attr, meetup_id)
+		data = []
+
+		if meetup_attr == 'attendance':
+			offset = 0
+			for x in range(5):
+				params['offset'] = offset
+				params['filter'] = 'all'
+				params['page'] = 200
+				data = data + requests.get(url,params=params).json()
+				offset += 1 
+				time.sleep(.25)
+	
+		else:
+			data = requests.get(url,params=params).json()
+
+		self.write(json.dumps(data))
+
+	def build_path(self, attr, event_id):
+		base_url = 'https://api.meetup.com'
+		mapping = {
+			'description' : '/2/event/' + event_id,
+			'speakers': '/2/event/' + event_id,
+			'venue': '/2/event/' + event_id,
+			'sposors': '/2/event/' + event_id,
+			'photos': '/2/photos',
+			'comments': '/2/event_comments',
+			'ratings': '/2/event_ratings',
+			'attendance': '/DataKind-NYC/events/' + event_id + '/attendance/',
+			'rsvps': '/2/rsvps'
+		}
+		return base_url + mapping[attr]
+
+
+class OfficeHourCheckinHandler(tornado.web.RequestHandler):
+	def get(self, event_id):
+		url = 'https://api.meetup.com/2/rsvps'
+		params = {
+			'group_id': '4300032', 
+			'key': settings['meetup_api_key'], 
+			'signed':'true',
+			'status': 'past',
+			'event_id': event_id
+		}
+		res = requests.get(url, params=params)
+		self.render('meetup_checkin.html', rsvps=res.json())
+
+	def post(self, event_id):
+		db = client.oh_attendance
+		db.rsvpd
+
+		attendee_dict = {
+			'meetup_user_id': self.get_argument('user_id'),
+			'event_id': self.get_argument('event_id'),
+			'status': self.get_argument('status')
+		}
+		db.rsvpd.insert(attendee_dict)
+		self.write('success')
 

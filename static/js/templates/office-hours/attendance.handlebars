@@ -1,0 +1,33 @@
+<script type="x-handlebars-template">
+	<div id="left_pane">
+		<ul>
+			<li>
+				<p class="label attended">Attended</p>
+				<p class="value">{{ rsvps.attended }}</p>
+			</li>
+			<li>
+				<p class="label noshow">No Show</p>
+				<p class="value">{{ rsvps.noshow }}</p>
+			</li>		
+			<li>
+				<p class="label absent">Absent</p>
+				<p class="value">{{ rsvps.absent }}</p>
+			</li>
+			<li>
+				<p class="label new">New</p>
+			</li>
+			<li>
+				<p class="label returning">Returning</p>				
+			</li>
+		</ul>
+	</div>
+	<div id="right_pane">
+		{{#each rsvps.results}}
+			<div class="attn {{this.status}}">
+				<img  class="attn-img" src="{{this.member.photo.thumb}}"/>
+				<h2 class="attn-name"> {{this.member.name}}</h2>
+				<h3 class="attn-status">Status {{this.status}}</h3>
+			</div>
+		{{/each}}
+	</div>
+</script>

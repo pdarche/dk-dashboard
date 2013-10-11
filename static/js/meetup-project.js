@@ -4,16 +4,21 @@ $(document).ready(function(){
 
     $('#meetup_nav li').click(function(){
         var el = $(this)
-          , attr, path;
+          , attr, path, program;
 
         $('.active').removeClass('active')
         el.addClass('active')
         attr = el.attr('id')
         path = '/api/meetups/project/' + eventId
 
-        $.get(path, {attr: attr}, function(data){
-          console.log("api response", data)
-        })
+
+        $.when($.get(path, {attr: attr}), $.get('/static/js/templates/meetups/rsvps.handlebars'))
+         .done(function(data, template){
+          
+          var source = $(template[0]).html()
+            , template = Handlebars.compile(source)
+            , $('#meetup_data').html(template({rsvps:}))      
+         })
+
     })
 })
-
