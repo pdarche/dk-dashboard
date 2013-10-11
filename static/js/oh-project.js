@@ -15,7 +15,8 @@ $(document).ready(function(){
         $.when($.getJSON(path, {attr: attr}), $.get('/static/js/templates/office-hours/' + attr + '.handlebars'))
          .done(function(data, template){
 
-            console.log('data', data[0])
+            console.log(data[0])
+            console.log(template[0])
             var source = $(template[0]).html()
               , template = Handlebars.compile(source);          
 
@@ -66,6 +67,9 @@ function formatTemplateData(attr, data) {
       absent: returnLen(data, 'absent'),
       results: data
     }
+  } else if (attr === 'comments') {
+    templateData = data
   }
+
   return templateData
 }

@@ -1,0 +1,19 @@
+<script type="x-handlebars-template">
+	<div id="left_pane">
+		<ul>
+			<li>
+				<p class="label attended">comments</p>
+				<p class="value">{{ rsvps.meta.count }}</p>
+			</li>
+		</ul>
+	</div>
+	<div id="right_pane">
+		{{#each rsvps.results}}
+			<div class="comment {{this.event_comment_id}}">
+				<img  class="attn-img" src="{{this.member.photo.thumb}}"/>
+				<h2 class="commenter-name"> {{this.member_name}}</h2>
+				<p class="comment-text">{{this.comment}}</p>
+			</div>
+		{{/each}}	
+	</div>	
+</script>
