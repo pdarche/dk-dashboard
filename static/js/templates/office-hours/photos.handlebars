@@ -2,9 +2,11 @@
 	<div id="photos">
 		{{#each rsvps.results}}
 			<div class="photo {{this.photo_id}}">
-				<img src="{{ this.photo_link }}"
-				<h3>{{ this.caption }}</h3>
-				<h5>{{this.member.name}}</h5>
+				<img src="{{ this.photo_link }}"/>
+				<div class="photo-info">	
+					<h3>{{ this.caption }}</h3>
+					<h5>{{this.member.name}}</h5>
+				</div>
 			</div>
 		{{/each}}
 	</div>

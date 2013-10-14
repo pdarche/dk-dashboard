@@ -19,24 +19,46 @@ $(document).ready(function(){
 
         $.when(
             $.getJSON(path, {attr: attr}), 
-            $.get('/static/js/templates/office-hours/' + attr + '.handlebars'))
-         .done(function(data, template){
-          console.log(data[0])
+            $.get('/static/js/templates/office-hours/' + attr + '.handlebars'),
+            $.get('/static/js/templates/office-hours/' + attr + '-subnav.handlebars'))
+         .done(function(data, template, subnavTemplate){
             var source = $(template[0]).html()
-              , template = Handlebars.compile(source);
+              , subnavSource = $(subnavTemplate[0]).html()
+              , template = Handlebars.compile(source)
+              , subnavTemplate = Handlebars.compile(subnavSource);
 
+            console.log(data[0])
             templateData = formatTemplateData(attr, data[0])
             $('#meetup_data').html(template({rsvps: templateData, event_data: eventData}))
+            $('#office_hours_subnav').html(subnavTemplate)
          })
+
+         $('#office_hours_subnav').slideDown('fast').delay(500).queue(function(){
+          $('html').animate({
+              scrollTop: $("#meetup_nav").offset().top
+           }, 500);
+         }).dequeue()
     })
 
     // refactor 
-    $('#meetup_data').on('click', 'li', function(){
+    $('#meetup_data').on('click', '#left_pane li', function(){
       var el = $(this)
         , tally = '.' + tallyType(el.find('.label').attr('class'))
 
       $(tally).show()
       $('.rsvper, .attn').not(tally).hide();
+      $('.active-tally').removeClass('active-tally')
+      el.addClass('active-tally')
+    })
+
+    $('#office_hours_subnav').on('click', '.subnav-list li', function(){
+      var el = $(this)
+        , returningStatus = '.' + el.attr('class').split(' ')[0] 
+
+      // $(returningStatus).show()
+      $('.rsvper, .attn').not(returningStatus).hide();
+      $('.active-subnav').removeClass('active-subnav')
+      el.addClass('active-subnav')
     })
 })
 
@@ -58,10 +80,24 @@ function formatTemplateData(attr, data) {
   var templateData
 
   if (attr === 'rsvps') {
-    templateData = { 
-      total: data.meta.count, 
-      tallies: data.results[0].tallies,
-      results: data.results
+    var rsvps = data.results[0]
+      , member_ids
+
+    rsvps.concat(data.results[1].concat(data.results[2]))
+    member_ids = _.pluck(_.pluck(rsvps, 'member'), 'member_id')
+    
+    _.each(data.results[3], function(rsvp){
+      if (_.indexOf(member_ids, rsvp.member.member_id) !== -1 ){
+        rsvp.returningStatus = 'returning' 
+      } else {
+        rsvp.returningStatus = 'new'
+      }
+    })
+
+    templateData = {
+      total: data.results[3].length, 
+      tallies: data.results[3][0].tallies,
+      results: data.results[3]
     }
   } else if (attr === 'attendance') {
     templateData = { 

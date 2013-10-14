@@ -31,7 +31,7 @@
 	</div>
 	<div id="right_pane">
 		{{#each rsvps.results}}
-			<div class="rsvper {{this.response}}">
+			<div class="rsvper {{this.response}} {{this.returningStatus}}">
 				<img  class="rsvper-img" src="{{this.member_photo.thumb_link}}"/>
 				<h2 class="rsvper-name"> {{this.member.name}}</h2>
 			</div>

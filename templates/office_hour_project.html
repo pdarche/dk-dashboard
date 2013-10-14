@@ -5,10 +5,10 @@
 			<header>
 				<h5>Meetup</h5>
 				<h1>{{ event['name'] }}</h1>
-				<span id="subheading">
+<!-- 				<span id="subheading">
 					<p>{{ event['time'] }}</p>
 					<p>{{ event['venue']['name'] }}</p>
-				</span>
+				</span> -->
 			</header>
 			<div id="meetup_nav">
 				<ul>
@@ -23,6 +23,7 @@
 					<li id="rsvps">RSVPs</li>
 				</ul>
 			</div>
+			<div id="office_hours_subnav"></div>
 			<div id="meetup_data">				
 				{% raw event['description'] %}
 			</div>

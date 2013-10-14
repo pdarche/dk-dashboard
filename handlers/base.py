@@ -164,8 +164,7 @@ class OfficeHourProjectAPIHandler(tornado.web.RequestHandler):
 			'key': settings['meetup_api_key'], 
 	    	'signed':'true',
 	    	'status': 'past',
-	    	'event_id': meetup_id,
-
+	    	'event_id': meetup_id
 	    }
 		meetup_attr = self.get_argument('attr')		
 		url = self.build_path(meetup_attr, meetup_id)
@@ -180,6 +179,11 @@ class OfficeHourProjectAPIHandler(tornado.web.RequestHandler):
 				data = data + requests.get(url,params=params).json()
 				offset += 1 
 				time.sleep(.25)
+		elif meetup_attr == 'rsvps':
+			del params['event_id']
+			events = requests.get('https://api.meetup.com/2/events', params=params).json()
+			ohs = filter(lambda ev: self.get_office_hours(ev), events['results'])
+			data = {'results': [self.fetch_oh_rsvps(oh) for oh in ohs]}
 		else:
 			data = requests.get(url,params=params).json()
 
@@ -201,6 +205,23 @@ class OfficeHourProjectAPIHandler(tornado.web.RequestHandler):
 		}
 		return base_url + mapping[attr]
 
+	def fetch_oh_rsvps(self, event):
+	    base_url = 'https://api.meetup.com'
+	    params = {
+	        'group_id': '4300032', 
+	        'key': settings['meetup_api_key'], 
+	        'signed':'true',
+	        'event_id': event['id'],
+	    }
+	    res = requests.get(base_url + '/2/rsvps', params=params)
+	    time.sleep(.25)
+	    return res.json()['results']
+
+	def get_office_hours(self, event):
+	    if event['name'] == 'DataKind Open Office Hours':
+	        return event
+	    else:
+	        pass
 
 class OfficeHourCheckinHandler(tornado.web.RequestHandler):
 	def get(self, event_id):
