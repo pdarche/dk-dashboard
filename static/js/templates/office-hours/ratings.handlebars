@@ -1,0 +1,22 @@
+<script type="x-handlebars-template">
+	<div id="left_pane">
+		<ul>
+			<li>
+				<p class="label total">Total</p>
+				<p class="value">{{ rsvps.meta.total_count }}</p>
+			</li>
+			<li>
+				<p class="label total">Avg Rating</p>
+				<p class="value">{{ event_data.rating.average }}</p>
+			</li>			
+		</ul>
+	</div>
+	<div id="right_pane">
+		{{#each rsvps.results}}
+			<div class="rater {{this.member_name}}">				
+				<h2 class="rsvper-name"> {{this.member_name}}</h2>
+				<p class="time">{{ formatDate this.time}} </p>
+			</div>
+		{{/each}}
+	</div>
+</script>

@@ -180,7 +180,6 @@ class OfficeHourProjectAPIHandler(tornado.web.RequestHandler):
 				data = data + requests.get(url,params=params).json()
 				offset += 1 
 				time.sleep(.25)
-	
 		else:
 			data = requests.get(url,params=params).json()
 
@@ -189,6 +188,7 @@ class OfficeHourProjectAPIHandler(tornado.web.RequestHandler):
 	def build_path(self, attr, event_id):
 		base_url = 'https://api.meetup.com'
 		mapping = {
+			'event' : '/2/event/' + event_id,
 			'description' : '/2/event/' + event_id,
 			'speakers': '/2/event/' + event_id,
 			'venue': '/2/event/' + event_id,
